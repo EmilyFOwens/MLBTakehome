@@ -67,6 +67,9 @@ func (gs *GameSorter) Sort() {
 // Game 1 must include the favorite team
 // Game 2 must not include the favorite team
 func (gs *GameSorter) byFavoriteTeam(game1, game2 *schema.Game) bool {
+	if game1 == nil || game2 == nil {
+		return false
+	}
 	if favoriteTeamIsPlaying(game1, gs.teamId) {
 		if !favoriteTeamIsPlaying(game2, gs.teamId) {
 			return true
@@ -78,6 +81,10 @@ func (gs *GameSorter) byFavoriteTeam(game1, game2 *schema.Game) bool {
 // byGameStartTime sorts the games considering both the gameDate value,
 // and if the games in consideration are part of a doubleheader
 func (gs *GameSorter) byGameStartTime(game1, game2 *schema.Game) bool {
+	if game1 == nil || game2 == nil {
+		return false
+	}
+
 	// If it isn't a game by our favorite team, there is no need to perform any more operations
 	if !favoriteTeamIsPlaying(game1, gs.teamId) && !favoriteTeamIsPlaying(game2, gs.teamId) {
 		return false
@@ -101,6 +108,10 @@ func (gs *GameSorter) byGameStartTime(game1, game2 *schema.Game) bool {
 
 // byLiveGame sorts games such that a live game is displayed before any non-live game
 func (gs *GameSorter) byLiveGame(game1, game2 *schema.Game) bool {
+	if game1 == nil || game2 == nil {
+		return false
+	}
+
 	if !favoriteTeamIsPlaying(game1, gs.teamId) || !favoriteTeamIsPlaying(game2, gs.teamId) {
 		return false
 	}
@@ -118,6 +129,9 @@ func (gs *GameSorter) byLiveGame(game1, game2 *schema.Game) bool {
 // favoriteTeamIsPlaying checks to see if either the home or away team is
 // our favorite team
 func favoriteTeamIsPlaying(game *schema.Game, teamId int) bool {
+	if game == nil {
+		return false
+	}
 	if game.Teams.Home.Team.Id == teamId || game.Teams.Away.Team.Id == teamId {
 		return true
 	}
