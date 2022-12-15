@@ -30,7 +30,7 @@ func FavoriteTeamGames(teamId int, date string) ([]byte, error) {
 	}
 
 	// Sort retrieved schedule
-	SortGameFunction(&respSchedule, teamId)
+	SortGames(&respSchedule, teamId)
 
 	// Return sorted schedule
 	return json.Marshal(respSchedule)

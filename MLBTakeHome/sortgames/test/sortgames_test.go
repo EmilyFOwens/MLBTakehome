@@ -162,7 +162,7 @@ func TestSortGameDifferingTeam(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sortgames.SortGameFunction(tt.args.respSchedule, tt.args.teamId)
+			sortgames.SortGames(tt.args.respSchedule, tt.args.teamId)
 			got := tt.args.respSchedule.Dates[0].Games
 
 			gotBytes, _ := json.Marshal(got)
@@ -253,7 +253,7 @@ func TestSortGameDifferingTime(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sortgames.SortGameFunction(tt.args.respSchedule, tt.args.teamId)
+			sortgames.SortGames(tt.args.respSchedule, tt.args.teamId)
 			got := tt.args.respSchedule.Dates[0].Games
 
 			gotBytes, _ := json.Marshal(got)
@@ -298,7 +298,7 @@ func TestSortGameDoubleheader(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sortgames.SortGameFunction(tt.args.respSchedule, tt.args.teamId)
+			sortgames.SortGames(tt.args.respSchedule, tt.args.teamId)
 			got := tt.args.respSchedule.Dates[0].Games
 
 			gotBytes, _ := json.Marshal(got)
@@ -371,7 +371,7 @@ func TestSortGameLiveGame(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sortgames.SortGameFunction(tt.args.respSchedule, tt.args.teamId)
+			sortgames.SortGames(tt.args.respSchedule, tt.args.teamId)
 			got := tt.args.respSchedule.Dates[0].Games
 
 			gotBytes, _ := json.Marshal(got)
@@ -453,7 +453,7 @@ func TestSortGameMultipleCriteria(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sortgames.SortGameFunction(tt.args.respSchedule, tt.args.teamId)
+			sortgames.SortGames(tt.args.respSchedule, tt.args.teamId)
 			got := tt.args.respSchedule.Dates[0].Games
 
 			gotBytes, _ := json.Marshal(got)
