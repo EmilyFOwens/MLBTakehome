@@ -14,4 +14,9 @@ ex. if you want the results for 11/02/2016, and your favorite team is the Cubs, 
 ./main -date="2016-11-02" -teamId=112 
 ```
 
-The program will then execute, and the resulting sorted json will be written to the file ```schedule.json```
+By default the program will write the sorted json to stdout, but if you use the ```-asFile``` flag, the sorted json will instead be written to the file ```schedule.json```:
+```
+./main -date="2016-11-02" -teamId=112 -asFile
+```
+
+### If there are any questions, please feel free to contact me. Thanks!
