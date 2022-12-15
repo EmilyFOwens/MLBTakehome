@@ -55,8 +55,9 @@ func TestSortedGames(t *testing.T) {
 				return
 			}
 
-			//assert.Equal(t, respScheduleOriginal, respScheduleSorted, "oh")
-			assert.ElementsMatch(t, respScheduleOriginal.Dates[0].Games, respScheduleSorted.Dates[0].Games)
+			if respScheduleOriginal.Dates != nil {
+				assert.ElementsMatch(t, respScheduleOriginal.Dates[0].Games, respScheduleSorted.Dates[0].Games)
+			}
 		})
 	}
 }

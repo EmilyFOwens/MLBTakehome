@@ -4,7 +4,10 @@ import (
 	"MLBTakeHome/schema"
 )
 
-func SortGameFunction(respSchedule *schema.Schedule, teamId int) {
+func SortGames(respSchedule *schema.Schedule, teamId int) {
+	if respSchedule.Dates == nil {
+		return
+	}
 	gameSorter := GameSorter{
 		games:  respSchedule.Dates[0].Games,
 		teamId: teamId,
