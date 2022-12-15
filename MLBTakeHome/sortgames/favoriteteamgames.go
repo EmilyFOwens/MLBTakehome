@@ -8,12 +8,8 @@ import (
 )
 
 // FavoriteTeamGames sends the list of newly sorted games to the client
-//
-// As this is being treated as proof of concept, errors aren't handled beyond being passed to the
-// calling function; For the purpose of this exercise, the assumption is that the client will
-// itself have some sort of error handling
-//
-// Returns json as []byte
+// If no http error, sorts games and returns json as []byte
+// If http error occurs, returns http status code as []byte
 func FavoriteTeamGames(teamId int, date string) ([]byte, error) {
 	var respSchedule schema.Schedule
 
@@ -22,6 +18,10 @@ func FavoriteTeamGames(teamId int, date string) ([]byte, error) {
 	defer resp.Body.Close()
 	if err != nil {
 		return []byte{}, err
+	}
+
+	if resp.StatusCode >= 300 {
+		return []byte(resp.Status), nil
 	}
 
 	err = json.NewDecoder(resp.Body).Decode(&respSchedule)
