@@ -25,7 +25,7 @@ func TestSortedGames(t *testing.T) {
 			name: "Basic",
 			args: args{
 				teamId: 133,
-				date:   "2022-07-21",
+				date:   "202d",
 			},
 		},
 	}
@@ -55,7 +55,7 @@ func TestSortedGames(t *testing.T) {
 				return
 			}
 
-			if respScheduleOriginal.Dates != nil {
+			if len(respScheduleOriginal.Dates) != 0 {
 				assert.ElementsMatch(t, respScheduleOriginal.Dates[0].Games, respScheduleSorted.Dates[0].Games)
 			}
 		})

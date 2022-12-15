@@ -14,7 +14,7 @@ import (
 // Currently drops returned http errors, and will simply return an empty file
 func main() {
 	dateFlag := flag.String("date", "2016-11-02", "date in format YYYY-MM-DD")
-	teamFlag := flag.Int("teamId", 112, "Id of favorite team")
+	teamFlag := flag.Int("teamId", 112, "Id of favorite team, e.g. 112 for CHC")
 
 	flag.Parse()
 
