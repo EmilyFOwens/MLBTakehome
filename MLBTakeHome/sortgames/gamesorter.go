@@ -5,6 +5,7 @@ import (
 	"sort"
 )
 
+// comparisonFunc type definition for functions that Sort() can use for the schema.Game struct
 type comparisonFunc func(game1, game2 *schema.Game) bool
 
 // GameSorter sorts games, favoring games with the teamId of
