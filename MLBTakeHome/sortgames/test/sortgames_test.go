@@ -336,7 +336,7 @@ func TestSortGameLiveGame(t *testing.T) {
 								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
 									IsLive().GetGame(),
 								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
-									IsRegDoubleheader().TimeTBD().IsLive().GetGame(),
+									IsRegDoubleheader().TimeTBD().GetGame(),
 							},
 						},
 					},
@@ -344,13 +344,12 @@ func TestSortGameLiveGame(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-
 				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
 					IsLive().GetGame(),
 				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
 					IsRegDoubleheader().GetGame(),
 				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
-					IsRegDoubleheader().TimeTBD().IsLive().GetGame(),
+					IsRegDoubleheader().TimeTBD().GetGame(),
 			},
 		},
 
