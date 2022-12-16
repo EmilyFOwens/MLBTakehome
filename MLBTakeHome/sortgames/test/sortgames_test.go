@@ -13,9 +13,10 @@ var defaultTeamId = 134
 var notOurTeam1 = 130
 var notOurTeam2 = 135
 var notOurTeam3 = 150
+var notOurTeam4 = 151
+var notOurTeam5 = 152
 
 func TestSortGameDifferingTeam(t *testing.T) {
-	now := time.Now()
 	type args struct {
 		respSchedule *schema.Schedule
 		teamId       int
@@ -46,7 +47,7 @@ func TestSortGameDifferingTeam(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam2).GetGame(),
 							},
 						},
 					},
@@ -54,7 +55,7 @@ func TestSortGameDifferingTeam(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam2).GetGame(),
 			},
 		},
 		{
@@ -64,7 +65,7 @@ func TestSortGameDifferingTeam(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam2, notOurTeam1, now, false, false, false, 1),
+								CreateGame().HomeTeam(notOurTeam1).AwayTeam(notOurTeam2).GetGame(),
 							},
 						},
 					},
@@ -72,7 +73,7 @@ func TestSortGameDifferingTeam(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam2, notOurTeam1, now, false, false, false, 1),
+				CreateGame().HomeTeam(notOurTeam1).AwayTeam(notOurTeam2).GetGame(),
 			},
 		},
 		{
@@ -82,8 +83,8 @@ func TestSortGameDifferingTeam(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
-								makeGame(notOurTeam3, notOurTeam2, now, false, false, false, 2),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GetGame(),
+								CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
 							},
 						},
 					},
@@ -91,8 +92,8 @@ func TestSortGameDifferingTeam(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
-				makeGame(notOurTeam3, notOurTeam2, now, false, false, false, 2),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GetGame(),
+				CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
 			},
 		},
 		{
@@ -102,8 +103,8 @@ func TestSortGameDifferingTeam(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam3, notOurTeam2, now, false, false, false, 2),
-								makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
+								CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GetGame(),
 							},
 						},
 					},
@@ -111,8 +112,8 @@ func TestSortGameDifferingTeam(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
-				makeGame(notOurTeam3, notOurTeam2, now, false, false, false, 2),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GetGame(),
+				CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
 			},
 		},
 		{
@@ -122,9 +123,9 @@ func TestSortGameDifferingTeam(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam2, notOurTeam1, now, false, false, false, 3),
-								makeGame(notOurTeam3, defaultTeamId, now, false, false, false, 1),
-								makeGame(notOurTeam2, defaultTeamId, now, false, false, false, 2),
+								CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam2).GetGame(),
 							},
 						},
 					},
@@ -132,9 +133,9 @@ func TestSortGameDifferingTeam(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam3, defaultTeamId, now, false, false, false, 1),
-				makeGame(notOurTeam2, defaultTeamId, now, false, false, false, 2),
-				makeGame(notOurTeam2, notOurTeam1, now, false, false, false, 3),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam2).GetGame(),
+				CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
 			},
 		},
 		{
@@ -144,9 +145,9 @@ func TestSortGameDifferingTeam(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam2, notOurTeam1, now, false, false, false, 1),
-								makeGame(notOurTeam3, notOurTeam2, now, false, false, false, 2),
-								makeGame(notOurTeam1, notOurTeam3, now, false, false, false, 3),
+								CreateGame().HomeTeam(notOurTeam1).AwayTeam(notOurTeam2).GetGame(),
+								CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
+								CreateGame().HomeTeam(notOurTeam3).AwayTeam(notOurTeam1).GetGame(),
 							},
 						},
 					},
@@ -154,9 +155,9 @@ func TestSortGameDifferingTeam(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam2, notOurTeam1, now, false, false, false, 1),
-				makeGame(notOurTeam3, notOurTeam2, now, false, false, false, 2),
-				makeGame(notOurTeam1, notOurTeam3, now, false, false, false, 3),
+				CreateGame().HomeTeam(notOurTeam1).AwayTeam(notOurTeam2).GetGame(),
+				CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GetGame(),
+				CreateGame().HomeTeam(notOurTeam3).AwayTeam(notOurTeam1).GetGame(),
 			},
 		},
 	}
@@ -193,8 +194,8 @@ func TestSortGameDifferingTime(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 2),
-								makeGame(notOurTeam1, defaultTeamId, past, false, false, false, 1),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(past).GetGame(),
 							},
 						},
 					},
@@ -202,8 +203,8 @@ func TestSortGameDifferingTime(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, past, false, false, false, 1),
-				makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 2),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(past).GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).GetGame(),
 			},
 		},
 		{
@@ -213,9 +214,9 @@ func TestSortGameDifferingTime(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 2),
-								makeGame(notOurTeam1, defaultTeamId, future, false, false, false, 3),
-								makeGame(notOurTeam1, defaultTeamId, past, false, false, false, 1),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(past).GetGame(),
 							},
 						},
 					},
@@ -223,33 +224,33 @@ func TestSortGameDifferingTime(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, past, false, false, false, 1),
-				makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 2),
-				makeGame(notOurTeam1, defaultTeamId, future, false, false, false, 3),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(past).GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).GetGame(),
 			},
 		},
-		{
-			name: "ThreeGamesDifferentTimesAndTeams",
-			args: args{
-				respSchedule: &schema.Schedule{
-					Dates: []schema.Date{
-						{
-							Games: []schema.Game{
-								makeGame(notOurTeam2, notOurTeam1, past, false, false, false, 3),
-								makeGame(notOurTeam3, defaultTeamId, now, false, false, false, 1),
-								makeGame(notOurTeam3, defaultTeamId, future, false, false, false, 2),
-							},
-						},
-					},
-				},
-				teamId: defaultTeamId,
-			},
-			want: []schema.Game{
-				makeGame(notOurTeam3, defaultTeamId, now, false, false, false, 1),
-				makeGame(notOurTeam3, defaultTeamId, future, false, false, false, 2),
-				makeGame(notOurTeam2, notOurTeam1, past, false, false, false, 3),
-			},
-		},
+		//{
+		//	name: "ThreeGamesDifferentTimesAndTeams",
+		//	args: args{
+		//		respSchedule: &schema.Schedule{
+		//			Dates: []schema.Date{
+		//				{
+		//					Games: []schema.Game{
+		//						makeGame(notOurTeam2, notOurTeam1, past, false, false, false, 3),
+		//						makeGame(notOurTeam3, defaultTeamId, now, false, false, false, 1),
+		//						makeGame(notOurTeam3, defaultTeamId, future, false, false, false, 2),
+		//					},
+		//				},
+		//			},
+		//		},
+		//		teamId: defaultTeamId,
+		//	},
+		//	want: []schema.Game{
+		//		makeGame(notOurTeam3, defaultTeamId, now, false, false, false, 1),
+		//		makeGame(notOurTeam3, defaultTeamId, future, false, false, false, 2),
+		//		makeGame(notOurTeam2, notOurTeam1, past, false, false, false, 3),
+		//	},
+		//},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -282,8 +283,8 @@ func TestSortGameDoubleheader(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam1, defaultTeamId, now, true, true, false, 2),
-								makeGame(notOurTeam1, defaultTeamId, now, true, false, false, 1),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).IsRegDoubleheader().TimeTBD().GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).IsRegDoubleheader().GetGame(),
 							},
 						},
 					},
@@ -291,8 +292,8 @@ func TestSortGameDoubleheader(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, now, true, false, false, 1),
-				makeGame(notOurTeam1, defaultTeamId, now, true, true, false, 2),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).IsRegDoubleheader().GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).IsRegDoubleheader().TimeTBD().GetGame(),
 			},
 		},
 	}
@@ -322,17 +323,20 @@ func TestSortGameLiveGame(t *testing.T) {
 		args args
 		want []schema.Game
 	}{
-
 		{
-			name: "testing",
+			name: "LiveWithDoubleHeaders",
 			args: args{
 				respSchedule: &schema.Schedule{
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam1, defaultTeamId, now, true, true, false, 3),
-								makeGame(notOurTeam1, defaultTeamId, now, true, false, false, 2),
-								makeGame(notOurTeam1, defaultTeamId, future, false, false, true, 1),
+
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+									IsRegDoubleheader().GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+									IsLive().GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+									IsRegDoubleheader().TimeTBD().IsLive().GetGame(),
 							},
 						},
 					},
@@ -340,9 +344,13 @@ func TestSortGameLiveGame(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, future, false, false, true, 1),
-				makeGame(notOurTeam1, defaultTeamId, now, true, false, false, 2),
-				makeGame(notOurTeam1, defaultTeamId, now, true, true, false, 3),
+
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+					IsLive().GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+					IsRegDoubleheader().GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+					IsRegDoubleheader().TimeTBD().IsLive().GetGame(),
 			},
 		},
 
@@ -353,9 +361,12 @@ func TestSortGameLiveGame(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam1, defaultTeamId, past, false, false, false, 2),
-								makeGame(notOurTeam1, defaultTeamId, now, false, false, true, 1),
-								makeGame(notOurTeam1, defaultTeamId, future, false, false, false, 3),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(past).
+									GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+									IsLive().GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).
+									GetGame(),
 							},
 						},
 					},
@@ -363,9 +374,12 @@ func TestSortGameLiveGame(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, now, false, false, true, 1),
-				makeGame(notOurTeam1, defaultTeamId, past, false, false, false, 2),
-				makeGame(notOurTeam1, defaultTeamId, future, false, false, false, 3),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+					IsLive().GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(past).
+					GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).
+					GetGame(),
 			},
 		},
 	}
@@ -402,9 +416,9 @@ func TestSortGameMultipleCriteria(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(notOurTeam3, notOurTeam2, past, false, false, false, 3),
-								makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
-								makeGame(notOurTeam1, defaultTeamId, future, false, false, false, 2),
+								CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GameDate(now).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).GetGame(),
 							},
 						},
 					},
@@ -412,9 +426,9 @@ func TestSortGameMultipleCriteria(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(notOurTeam1, defaultTeamId, now, false, false, false, 1),
-				makeGame(notOurTeam1, defaultTeamId, future, false, false, false, 2),
-				makeGame(notOurTeam3, notOurTeam2, past, false, false, false, 3),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).GetGame(),
+				CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).GameDate(now).GetGame(),
 			},
 		},
 
@@ -425,14 +439,17 @@ func TestSortGameMultipleCriteria(t *testing.T) {
 					Dates: []schema.Date{
 						{
 							Games: []schema.Game{
-								makeGame(defaultTeamId, notOurTeam1, now, true, false, false, 2),
-								makeGame(notOurTeam2, notOurTeam1, past, false, true, false, 4),
-								makeGame(notOurTeam3, notOurTeam1, future, false, false, false, 5),
-								makeGame(notOurTeam1, defaultTeamId, now, true, true, false, 3),
-								makeGame(defaultTeamId, notOurTeam1, future, false, false, true, 1),
-								makeGame(notOurTeam2, notOurTeam1, past, true, true, false, 6),
-								makeGame(notOurTeam3, notOurTeam1, future, false, false, false, 7),
-								makeGame(notOurTeam2, notOurTeam1, future, false, true, true, 8),
+								CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).
+									GameDate(past).IsRegDoubleheader().TimeTBD().IsLive().GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+									IsRegDoubleheader().TimeTBD().GetGame(),
+								CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).
+									GameDate(past).IsRegDoubleheader().IsLive().GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+									IsRegDoubleheader().GetGame(),
+								CreateGame().HomeTeam(notOurTeam4).AwayTeam(notOurTeam5).GameDate(past).GetGame(),
+								CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).IsLive().GetGame(),
+								CreateGame().HomeTeam(notOurTeam5).AwayTeam(notOurTeam4).GameDate(now).GetGame(),
 							},
 						},
 					},
@@ -440,14 +457,19 @@ func TestSortGameMultipleCriteria(t *testing.T) {
 				teamId: defaultTeamId,
 			},
 			want: []schema.Game{
-				makeGame(defaultTeamId, notOurTeam1, future, false, false, true, 1),
-				makeGame(defaultTeamId, notOurTeam1, now, true, false, false, 2),
-				makeGame(notOurTeam1, defaultTeamId, now, true, true, false, 3),
-				makeGame(notOurTeam2, notOurTeam1, past, false, true, false, 4),
-				makeGame(notOurTeam3, notOurTeam1, future, false, false, false, 5),
-				makeGame(notOurTeam2, notOurTeam1, past, true, true, false, 6),
-				makeGame(notOurTeam3, notOurTeam1, future, false, false, false, 7),
-				makeGame(notOurTeam2, notOurTeam1, future, false, true, true, 8),
+
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(future).IsLive().GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+					IsRegDoubleheader().GetGame(),
+				CreateGame().HomeTeam(defaultTeamId).AwayTeam(notOurTeam1).GameDate(now).
+					IsRegDoubleheader().TimeTBD().GetGame(),
+
+				CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).
+					GameDate(past).IsRegDoubleheader().TimeTBD().IsLive().GetGame(),
+				CreateGame().HomeTeam(notOurTeam2).AwayTeam(notOurTeam3).
+					GameDate(past).IsRegDoubleheader().IsLive().GetGame(),
+				CreateGame().HomeTeam(notOurTeam4).AwayTeam(notOurTeam5).GameDate(past).GetGame(),
+				CreateGame().HomeTeam(notOurTeam5).AwayTeam(notOurTeam4).GameDate(now).GetGame(),
 			},
 		},
 	}
