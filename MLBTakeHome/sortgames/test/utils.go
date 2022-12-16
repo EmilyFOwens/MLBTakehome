@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// GameBuilder is the base for creating test game data
+// GameBuilder is the base struct for creating schema.Games for testing purposes only
 type GameBuilder struct {
 	Game schema.Game
 }
